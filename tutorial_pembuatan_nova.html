@@ -239,6 +239,30 @@ pipwin install pyaudio</pre>
     <pre>export GEMINI_API_KEY="KUNCI_API_ANDA_DISINI"</pre>
     <p>Simpan baris perintah ekspor tersebut di akhir file konfigurasi terminal seperti <code>~/.bashrc</code> atau <code>~/.zshrc</code> Anda agar kunci tidak terhapus ketika jendela terminal ditutup.</p>
 
+    <div class="note">
+        <div class="note-title">Panduan Detail Konfigurasi .bashrc (Linux / Raspberry Pi)</div>
+        <p>Agar variabel lingkungan <code>GEMINI_API_KEY</code> tersimpan secara permanen dan otomatis aktif setiap kali Anda membuka terminal baru, ikuti langkah-langkah berikut:</p>
+        <ol>
+            <li>Buka file konfigurasi <code>.bashrc</code> di direktori home Anda menggunakan editor teks <code>nano</code>:
+                <pre>nano ~/.bashrc</pre>
+            </li>
+            <li>Gulir ke baris paling bawah menggunakan tombol panah bawah pada keyboard Anda.</li>
+            <li>Tambahkan baris berikut di bagian akhir file:
+                <pre>export GEMINI_API_KEY="KUNCI_API_ANDA_DISINI"</pre>
+                *(Ganti <code>KUNCI_API_ANDA_DISINI</code> dengan kunci API asli dari Google AI Studio).*
+            </li>
+            <li>Simpan perubahan dengan menekan tombol <strong>Ctrl + O</strong> lalu tekan <strong>Enter</strong>.</li>
+            <li>Keluar dari editor nano dengan menekan <strong>Ctrl + X</strong>.</li>
+            <li>Terapkan perubahan tersebut pada sesi terminal Anda saat ini dengan perintah:
+                <pre>source ~/.bashrc</pre>
+            </li>
+            <li>Pastikan variabel lingkungan sudah terpasang dengan benar dengan menjalankan perintah:
+                <pre>echo $GEMINI_API_KEY</pre>
+                Jika terminal menampilkan kunci API Anda, berarti konfigurasi telah sukses dilakukan!
+            </li>
+        </ol>
+    </div>
+
     <h2>6. Cara Menjalankan Aplikasi</h2>
     <p>Anda dapat mengoperasikan Nova Robot Assistant dalam dua bentuk:</p>
 
