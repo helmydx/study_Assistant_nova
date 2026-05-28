@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panduan Pembuatan Nova Robot Assistant</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #1a1a1a;
+            background-color: #ffffff;
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            color: #111111;
+            border-bottom: 2px solid #eaeaea;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: #222222;
+            border-bottom: 1px solid #eaeaea;
+            padding-bottom: 8px;
+            margin-top: 40px;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            color: #333333;
+            margin-top: 25px;
+        }
+
+        p {
+            margin: 15px 0;
+        }
+
+        a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        ul, ol {
+            padding-left: 20px;
+            margin: 15px 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        pre {
+            background-color: #f6f8fa;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            padding: 16px;
+            font-family: ui-monospace, SFMono-Regular, SF Pro Mono, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            color: #24292f;
+        }
+
+        code {
+            font-family: ui-monospace, SFMono-Regular, SF Pro Mono, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            background-color: rgba(175, 184, 193, 0.2);
+            padding: 0.2em 0.4em;
+            border-radius: 6px;
+            font-size: 0.85em;
+        }
+
+        .note {
+            background-color: #f2f7ff;
+            border-left: 4px solid #2563eb;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .note-title {
+            font-weight: bold;
+            color: #1e3a8a;
+            margin-bottom: 5px;
+        }
+
+        .warning {
+            background-color: #fff8ec;
+            border-left: 4px solid #d97706;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .warning-title {
+            font-weight: bold;
+            color: #78350f;
+            margin-bottom: 5px;
+        }
+
+        .file-structure {
+            font-family: monospace;
+            white-space: pre;
+            background-color: #f6f8fa;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #d0d7de;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Panduan Pembuatan Nova Robot Assistant</h1>
+    <p>Dokumen ini ditujukan bagi pengembang maupun pemula yang ingin membangun robot asisten pintar berbasis kecerdasan buatan dari awal. Panduan mencakup penyiapan lingkungan sistem, instalasi dependensi, hingga menjalankan aplikasi di komputer lokal atau Raspberry Pi.</p>
+
+    <h2>1. Penyiapan Python di Sistem Operasi</h2>
+    <p>Aplikasi ini membutuhkan Python versi 3.10 atau versi di atasnya. Cari bagian di bawah sesuai dengan sistem operasi yang Anda pakai.</p>
+
+    <h3>Windows</h3>
+    <ol>
+        <li>Unduh installer Python resmi dari <a href="https://www.python.org/downloads/" target="_blank">python.org</a>. Disarankan memilih versi 3.10 atau 3.11.</li>
+        <li>Buka file installer yang sudah diunduh. Centang kotak <strong>"Add Python to PATH"</strong> sebelum mengeklik tombol "Install Now".</li>
+        <li>Untuk memastikan instalasi berhasil, buka Command Prompt (CMD) dan jalankan:
+            <pre>python --version</pre>
+        </li>
+    </ol>
+
+    <h3>macOS</h3>
+    <ol>
+        <li>Instal Homebrew jika belum terinstal pada Mac Anda dengan perintah terminal:
+            <pre>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</pre>
+        </li>
+        <li>Pasang Python menggunakan perintah brew:
+            <pre>brew install python@3.10</pre>
+        </li>
+        <li>Uji versi terinstal di Terminal:
+            <pre>python3 --version</pre>
+        </li>
+    </ol>
+
+    <h3>Linux dan Raspberry Pi</h3>
+    <ol>
+        <li>Buka jendela Terminal dan perbarui indeks paket sistem Anda:
+            <pre>sudo apt update && sudo apt upgrade -y</pre>
+        </li>
+        <li>Instal Python, pengelola paket PIP, serta modul lingkungan virtual dengan perintah berikut:
+            <pre>sudo apt install python3 python3-pip python3-venv -y</pre>
+        </li>
+    </ol>
+
+    <h2>2. Instalasi Dependensi Pustaka Sistem</h2>
+    <p>Karena aplikasi memproses input suara dari mikrofon (STT) serta mengeluarkan ucapan suara (TTS) dan memutar berkas musik secara lokal, Anda perlu memasang beberapa alat multimedia bawaan sistem operasi.</p>
+
+    <h3>Windows</h3>
+    <ul>
+        <li><strong>FFmpeg</strong>: Unduh paket biner dari situs resmi ffmpeg.org, ekstrak folder hasil unduhan, dan masukkan folder <code>bin</code> ke dalam Environment Variables sistem agar bisa dibaca Python.</li>
+        <li><strong>Build Tools C++</strong>: Jika terjadi kendala saat mengompilasi modul luring (seperti PyAudio), unduh dan instal Build Tools untuk Visual Studio dari situs web Microsoft.</li>
+    </ul>
+
+    <h3>macOS</h3>
+    <p>Jalankan perintah Homebrew untuk memasang komponen audio eksternal:</p>
+    <pre>brew install portaudio ffmpeg mpg123</pre>
+
+    <h3>Linux dan Raspberry Pi</h3>
+    <p>Pasang semua pustaka audio dan pemutar berkas mp3 di terminal:</p>
+    <pre>sudo apt install portaudio19-dev ffmpeg mpg123 libasound2-dev -y</pre>
+
+    <div class="note">
+        <div class="note-title">Catatan Penggunaan Raspberry Pi</div>
+        Jika Anda memasang proyek ini di Raspberry Pi, Anda disarankan menggunakan mikrofon USB portabel dan menyetel output audio default pada lubang Jack 3.5mm atau konektor HDMI audio yang aktif.
+    </div>
+
+    <h2>3. Daftar Struktur Berkas Proyek</h2>
+    <p>Berikut adalah peta direktori proyek asisten suara Nova yang perlu Anda siapkan:</p>
+
+    <div class="file-structure">asisten-nova/
+├── main.py             # Server FastAPI untuk websocket & routing perintah
+├── gemini_bot.py       # Logika kecerdasan buatan Gemini AI & API Call
+├── stt.py              # Konversi suara mikrofon menjadi teks (luring via Whisper)
+├── tts.py              # Sintesis ucapan teks menjadi suara lisan (luring via pyttsx3)
+├── database.py         # Pengelola database SQLite lokal (catatan, alarm, tugas)
+├── music_player.py     # Pemutar file audio lokal menggunakan utilitas mpg123
+├── desktop_app.py      # Pembungkus antarmuka web ke aplikasi window (pywebview)
+├── requirements.txt    # Daftar modul Python eksternal
+├── templates/
+│   └── index.html      # Tampilan antarmuka grafis robot dan chatbot
+└── static/
+    ├── app.js          # Logika frontend, websocket, dan clock timer
+    └── style.css       # Pengaturan tata letak dan desain visual dashboard</div>
+
+    <h2>4. Pembuatan Virtual Environment dan Instalasi Pustaka</h2>
+    <p>Lingkungan virtual berguna agar modul eksternal tidak bentrok dengan modul Python global di komputer Anda.</p>
+
+    <ol>
+        <li>Buka terminal atau CMD pada direktori proyek Anda.</li>
+        <li>Buat lingkungan virtual dengan perintah berikut:
+            <pre>python3 -m venv venv</pre>
+        </li>
+        <li>Aktifkan lingkungan virtual:
+            <p><strong>Windows (Command Prompt):</strong></p>
+            <pre>venv\Scripts\activate</pre>
+            <p><strong>macOS / Linux / Raspberry Pi:</strong></p>
+            <pre>source venv/bin/activate</pre>
+        </li>
+        <li>Instal modul-modul yang dibutuhkan melalui berkas requirements.txt:
+            <pre>pip install --upgrade pip
+pip install -r requirements.txt</pre>
+        </li>
+    </ol>
+
+    <div class="warning">
+        <div class="warning-title">Mengatasi Kegagalan Instalasi PyAudio di Windows</div>
+        Jika Anda mendapati error "pyaudio installation failed", gunakan paket <code>pipwin</code> untuk membantu pemasangan otomatis file biner PyAudio yang sesuai:
+        <pre>pip install pipwin
+pipwin install pyaudio</pre>
+    </div>
+
+    <h2>5. Konfigurasi Kunci API Gemini</h2>
+    <p>Untuk menghubungkan Nova dengan AI Gemini di cloud, Anda memerlukan kunci otorisasi API resmi.</p>
+
+    <ol>
+        <li>Kunjungi portal pengembang <a href="https://aistudio.google.com/" target="_blank">Google AI Studio</a>.</li>
+        <li>Buat kunci baru melalui menu <strong>"Get API Key"</strong>.</li>
+        <li>Setelah menyalin kunci tersebut, pasang sebagai variabel sistem di komputer Anda:</li>
+    </ol>
+
+    <p><strong>Untuk Windows (Command Prompt):</strong></p>
+    <pre>setx GEMINI_API_KEY "KUNCI_API_ANDA_DISINI"</pre>
+
+    <p><strong>Untuk macOS / Linux (Terminal):</strong></p>
+    <pre>export GEMINI_API_KEY="KUNCI_API_ANDA_DISINI"</pre>
+    <p>Simpan baris perintah ekspor tersebut di akhir file konfigurasi terminal seperti <code>~/.bashrc</code> atau <code>~/.zshrc</code> Anda agar kunci tidak terhapus ketika jendela terminal ditutup.</p>
+
+    <h2>6. Cara Menjalankan Aplikasi</h2>
+    <p>Anda dapat mengoperasikan Nova Robot Assistant dalam dua bentuk:</p>
+
+    <h3>A. Mode Server Web</h3>
+    <p>Jalankan server lokal FastAPI di dalam terminal:</p>
+    <pre>python3 -m uvicorn main:app --host 127.0.0.1 --port 8005</pre>
+    <p>Setelah server aktif, buka web browser Anda dan akses alamat berikut:</p>
+    <pre>http://127.0.0.1:8005</pre>
+
+    <h3>B. Mode Jendela Aplikasi Desktop</h3>
+    <p>Jika ingin menjalankan Nova dalam bentuk jendela aplikasi mandiri, jalankan skrip desktop pembungkus berikut:</p>
+    <pre>python3 desktop_app.py</pre>
+
+    <div class="note">
+        <div class="note-title">Catatan Pengunduhan Model Whisper Pertama Kali</div>
+        Saat pertama kali aplikasi mendeteksi perintah suara, sistem akan mengunduh model pemrosesan ucapan Whisper (model berukuran kurang lebih 500 MB) secara otomatis. Proses ini membutuhkan jaringan internet yang stabil di awal peluncuran.
+    </div>
+
+    <h2>7. Solusi untuk Masalah yang Sering Terjadi</h2>
+    <ul>
+        <li>
+            <strong>Masalah: "WebSocket Terputus" berulang kali di antarmuka</strong><br>
+            Solusi: Periksa konsol log terminal tempat Anda menjalankan FastAPI. Pastikan Anda telah menetapkan variabel lingkungan <code>GEMINI_API_KEY</code> dengan benar dan model Whisper telah selesai terunduh.
+        </li>
+        <li>
+            <strong>Masalah: Mikrofon tidak menangkap suara</strong><br>
+            Solusi: Pastikan mikrofon fisik Anda telah dicolokkan ke komputer dan diatur sebagai perangkat input audio default pada pengaturan sistem suara Anda. Izinkan akses mikrofon bila diminta oleh peramban.
+        </li>
+        <li>
+            <strong>Masalah: Tidak terdengar suara balasan dari asisten</strong><br>
+            Solusi: Modul TTS lokal menggunakan mesin suara bawaan sistem. Di Linux, pastikan program <code>espeak</code> terinstal (<code>sudo apt install espeak</code>).
+        </li>
+    </ul>
+
+</body>
+</html>

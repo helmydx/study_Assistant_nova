@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova Robot Assistant</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="theme-cyber sidebar-hidden">
+    <div class="app-container">
+        <!-- LEFT: Robot Face -->
+        <main class="face-panel">
+            <!-- App Navigation Dock -->
+            <nav class="app-dock" id="appDock">
+                <button class="dock-btn" data-tab="catatan" data-tooltip="Catatan">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                    </svg>
+                </button>
+                <button class="dock-btn" data-tab="tugas" data-tooltip="Tugas">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                </button>
+                <button class="dock-btn" data-tab="alarm" data-tooltip="Alarm">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                </button>
+                <button class="dock-btn" data-tab="pomodoro" data-tooltip="Fokus Pomodoro">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 6v6l4 2M16.24 7.76a6 6 0 1 0-8.49 0"></path>
+                    </svg>
+                </button>
+                <button class="dock-btn" data-tab="musik" data-tooltip="Pemutar Musik">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18V5l12-2v13"></path>
+                        <circle cx="6" cy="18" r="3"></circle>
+                        <circle cx="18" cy="16" r="3"></circle>
+                    </svg>
+                </button>
+            </nav>
+            
+            <!-- Theme Selector Button & Menu -->
+            <div class="theme-selector-container">
+                <button class="btn-theme-selector" id="btnThemeSelector" title="Pilih Tema Nova">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                    </svg>
+                </button>
+                <div class="theme-dropdown" id="themeDropdown">
+                    <button class="theme-opt active" data-theme="cyber">Cyberpunk</button>
+                    <button class="theme-opt" data-theme="arduino">Arduino Tech</button>
+                    <button class="theme-opt" data-theme="brutalist">Neo-Brutalisme</button>
+                    <button class="theme-opt" data-theme="female">Feminin (Pink)</button>
+                    <button class="theme-opt" data-theme="male">Maskulin (Biru)</button>
+                </div>
+            </div>
+
+            <div class="robot-face" id="robotFace">
+                <!-- Status Pill -->
+                <div class="status-indicator">
+                    <span class="status-dot" id="statusDot"></span>
+                    <span class="status-text" id="statusText">STANDBY</span>
+                </div>
+
+                <!-- Robot Clock -->
+                <div class="robot-clock" id="robotClock">00:00:00</div>
+
+                <!-- Eyes Container -->
+                <div class="eyes-container">
+                    <div class="eye-wrapper">
+                        <div class="eye left-eye" id="leftEye">
+                            <div class="pupil"></div>
+                        </div>
+                    </div>
+                    <div class="eye-wrapper">
+                        <div class="eye right-eye" id="rightEye">
+                            <div class="pupil"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mouth / Waveform Container -->
+                <div class="mouth-container">
+                    <svg class="mouth-svg" viewBox="0 0 300 100" preserveAspectRatio="none">
+                        <path id="mouthPath" d="M 10 50 Q 75 50 150 50 T 290 50" stroke="#00f3ff" stroke-width="5" fill="none" stroke-linecap="round"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Speech Captions -->
+            <div class="captions-area">
+                <div class="speech-bubble user-bubble" id="userBubble">Nova, bantu saya belajar...</div>
+                <div class="speech-bubble bot-bubble" id="botBubble">Halo! Saya Nova. Ada yang bisa saya bantu hari ini?</div>
+            </div>
+
+            <!-- Controls (Keyboard Input + Mic Trigger) -->
+            <div class="controls-panel">
+                <form id="inputForm" class="input-form">
+                    <input type="text" id="textInput" placeholder="Ketik perintah di sini..." autocomplete="off">
+                    <button type="submit" class="btn-send">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
+                </form>
+                
+                <button class="btn-mic mode-local" id="btnMicLocal" title="Klik untuk bicara (Mode Lokal)">
+                    <div class="mic-icon-wrapper">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                            <line x1="12" y1="19" x2="12" y2="23"></line>
+                            <line x1="8" y1="23" x2="16" y2="23"></line>
+                        </svg>
+                        <span class="btn-badge">Lokal</span>
+                    </div>
+                </button>
+                
+                <button class="btn-mic mode-ai" id="btnMicAI" title="Klik untuk bicara (Mode AI)">
+                    <div class="mic-icon-wrapper">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                            <line x1="12" y1="19" x2="12" y2="23"></line>
+                            <line x1="8" y1="23" x2="16" y2="23"></line>
+                        </svg>
+                        <span class="btn-badge">AI</span>
+                    </div>
+                </button>
+                
+                <button class="btn-mic mode-hybrid" id="btnMic" title="Tekan Spasi atau klik untuk bicara (Mode Hybrid)">
+                    <div class="mic-icon-wrapper">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                            <line x1="12" y1="19" x2="12" y2="23"></line>
+                            <line x1="8" y1="23" x2="16" y2="23"></line>
+                        </svg>
+                        <span class="btn-badge">H</span>
+                    </div>
+                </button>
+                
+                <button class="btn-mic btn-stop-speak" id="btnStopSpeak" title="Hentikan suara Nova">
+                    <div class="mic-icon-wrapper">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+                        </svg>
+                        <span class="btn-badge">Stop</span>
+                    </div>
+                </button>
+            </div>
+        </main>
+
+        <aside class="dashboard-panel" id="dashboardPanel">
+            <!-- Close Panel Button -->
+            <button class="btn-close-panel" id="btnClosePanel" title="Tutup Halaman (Keluar)">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <!-- Tabs Header -->
+            <header class="tab-headers">
+                <button class="tab-btn active" data-tab="catatan">CATATAN</button>
+                <button class="tab-btn" data-tab="tugas">TUGAS</button>
+                <button class="tab-btn" data-tab="alarm">ALARM</button>
+                <button class="tab-btn" data-tab="pomodoro">FOKUS</button>
+                <button class="tab-btn" data-tab="musik">MUSIK</button>
+            </header>
+
+            <!-- Tab Content -->
+            <div class="tab-contents">
+                <!-- Catatan -->
+                <section class="tab-pane active" id="tab-catatan">
+                    <div class="pane-header">
+                        <h2>Catatan Siswa</h2>
+                        <span class="count-badge" id="notesCount">0</span>
+                    </div>
+                    <div class="list-wrapper scrollbar-cool" id="notesList">
+                        <div class="empty-state">Belum ada catatan. Katakan "Nova, catat..." untuk menyimpan catatan.</div>
+                    </div>
+                </section>
+
+                <!-- Tugas -->
+                <section class="tab-pane" id="tab-tugas">
+                    <div class="pane-header">
+                        <h2>Tugas Sekolah</h2>
+                        <span class="count-badge" id="tasksCount">0</span>
+                    </div>
+                    <div class="list-wrapper scrollbar-cool" id="tasksList">
+                        <div class="empty-state">Bebas tugas! Katakan "Nova, tambah tugas..." untuk mencatat.</div>
+                    </div>
+                </section>
+
+                <!-- Alarm -->
+                <section class="tab-pane" id="tab-alarm">
+                    <div class="pane-header">
+                        <h2>Alarm Aktif</h2>
+                        <span class="count-badge" id="alarmsCount">0</span>
+                    </div>
+                    <div class="list-wrapper scrollbar-cool" id="alarmsList">
+                        <div class="empty-state">Tidak ada alarm. Katakan "Nova, pasang alarm jam..." untuk membuat.</div>
+                    </div>
+                </section>
+
+                <!-- Pomodoro / Fokus -->
+                <section class="tab-pane" id="tab-pomodoro">
+                    <div class="pane-header">
+                        <h2>Fokus Pomodoro</h2>
+                        <span class="count-badge" id="pomoStatusText">STANDBY</span>
+                    </div>
+                    <div class="pomodoro-container">
+                        <div class="pomodoro-timer-display" id="pomoTime">25:00</div>
+                        <div class="pomodoro-state-label" id="pomoLabel">Belajar</div>
+                        
+                        <div class="pomodoro-presets">
+                            <button class="btn-preset active" data-study="25" data-break="5">25/5 Min</button>
+                            <button class="btn-preset" data-study="50" data-break="10">50/10 Min</button>
+                            <button class="btn-preset" data-study="5" data-break="1">5/1 Min (Test)</button>
+                        </div>
+                        
+                        <div class="pomodoro-controls">
+                            <button class="btn-pomo-ctrl start" id="btnPomoStart">Mulai</button>
+                            <button class="btn-pomo-ctrl pause" id="btnPomoPause" disabled>Jeda</button>
+                            <button class="btn-pomo-ctrl reset" id="btnPomoReset">Reset</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Musik -->
+                <section class="tab-pane" id="tab-musik">
+                    <div class="pane-header">
+                        <h2>Pemutar Musik</h2>
+                        <span class="count-badge" id="musicCount">0</span>
+                    </div>
+                    
+                    <div class="music-player-widget">
+                        <div class="now-playing-title" id="nowPlayingText">Tidak ada musik diputar</div>
+                        
+                        <div class="music-controls-row">
+                            <button class="btn-music-action" id="btnMusicPrev" title="Lagu Sebelumnya">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><polygon points="19 20 9 12 19 4 19 20"></polygon><line x1="5" y1="4" x2="5" y2="20" stroke="currentColor" stroke-width="2"></line></svg>
+                            </button>
+                            <button class="btn-music-action play" id="btnMusicPlay" title="Putar/Jeda">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" id="playPauseIcon"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                            </button>
+                            <button class="btn-music-action" id="btnMusicStop" title="Stop Musik">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><rect x="4" y="4" width="16" height="16" rx="2"></rect></svg>
+                            </button>
+                            <button class="btn-music-action" id="btnMusicNext" title="Lagu Selanjutnya">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><polygon points="5 4 15 12 5 20 5 4"></polygon><line x1="19" y1="4" x2="19" y2="20" stroke="currentColor" stroke-width="2"></line></svg>
+                            </button>
+                        </div>
+                        
+                        <!-- Volume Slider -->
+                        <div class="volume-slider-container">
+                            <span class="vol-icon">🔊</span>
+                            <input type="range" id="volumeRange" min="0" max="100" value="70" class="volume-slider">
+                            <span id="volumeValue">70%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="list-wrapper scrollbar-cool" id="musicList">
+                        <div class="empty-state">Memuat daftar musik...</div>
+                    </div>
+                </section>
+            </div>
+            
+            <!-- Quick Clock & Device Stats -->
+            <footer class="dashboard-footer">
+                <div class="clock-display" id="clockDisplay">00:00:00</div>
+                <div class="date-display" id="dateDisplay">Rabu, 27 Mei 2026</div>
+                <div class="device-stats-bar" id="deviceStats">
+                    <div class="stat-item" title="CPU Load">
+                        <span class="stat-lbl">CPU</span>
+                        <div class="stat-track"><div class="stat-fill" id="cpuFill" style="width: 0%"></div></div>
+                        <span class="stat-val" id="cpuVal">0.0</span>
+                    </div>
+                    <div class="stat-item" title="RAM Usage">
+                        <span class="stat-lbl">RAM</span>
+                        <div class="stat-track"><div class="stat-fill" id="ramFill" style="width: 0%"></div></div>
+                        <span class="stat-val" id="ramVal">0%</span>
+                    </div>
+                    <div class="stat-item" id="batteryContainer" title="Battery Status">
+                        <span class="stat-lbl">BAT</span>
+                        <div class="stat-track"><div class="stat-fill" id="batFill" style="width: 0%"></div></div>
+                        <span class="stat-val" id="batVal">N/A</span>
+                    </div>
+                </div>
+            </footer>
+        </aside>
+    </div>
+
+    <!-- Alarm Overlay Triggered when Alarm goes off -->
+    <div class="alarm-overlay" id="alarmOverlay">
+        <div class="alarm-card">
+            <div class="alarm-icon">🔔</div>
+            <h1 id="alarmOverlayTime">07:00</h1>
+            <p id="alarmOverlayLabel">Saatnya Bangun!</p>
+            <button class="btn-dismiss" id="btnDismissAlarm">Selesai</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/static/app.js"></script>
+</body>
+</html>

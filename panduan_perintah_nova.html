@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panduan Perintah Nova Assistant</title>
+    <style>
+        :root {
+            --bg-color: #0b111e;
+            --container-bg: rgba(17, 24, 39, 0.85);
+            --border-color: rgba(0, 243, 255, 0.2);
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --neon-accent: #00f3ff;
+            --table-header-bg: rgba(0, 243, 255, 0.1);
+            --table-row-even: rgba(255, 255, 255, 0.02);
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-family);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 960px;
+            width: 100%;
+            background: var(--container-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+        }
+
+        h1 {
+            color: var(--neon-accent);
+            text-align: center;
+            font-size: 2.2rem;
+            margin-top: 0;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0 0 12px rgba(0, 243, 255, 0.35);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+
+        .hybrid-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .mode-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 24px;
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.01);
+        }
+
+        .mode-card h3 {
+            margin-top: 0;
+            color: var(--neon-accent);
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            border-left: 3px solid var(--neon-accent);
+            padding-left: 10px;
+        }
+
+        .mode-card p {
+            margin: 0;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .section-title {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 8px;
+            margin-top: 50px;
+            margin-bottom: 25px;
+            color: var(--neon-accent);
+            text-transform: uppercase;
+            font-size: 1.4rem;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 8px rgba(0, 243, 255, 0.2);
+        }
+
+        .group-title {
+            color: var(--text-primary);
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
+
+        .note-badge {
+            background: rgba(245, 158, 11, 0.08);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            color: #fbbf24;
+            padding: 12px 18px;
+            border-radius: 8px;
+            margin-bottom: 18px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 35px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        th {
+            background-color: var(--table-header-bg);
+            color: var(--neon-accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        th, td {
+            padding: 14px 20px;
+            text-align: left;
+        }
+
+        td {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            font-size: 0.95rem;
+            color: var(--text-primary);
+        }
+
+        tr:nth-child(even) td {
+            background-color: var(--table-row-even);
+        }
+
+        tr:hover td {
+            background-color: rgba(0, 243, 255, 0.04);
+        }
+
+        code {
+            font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+            background: rgba(0, 243, 255, 0.08);
+            color: #38bdf8;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        ul {
+            padding-left: 20px;
+            margin: 12px 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .example-val {
+            color: #34d399;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Panduan Perintah Nova Assistant</h1>
+    <div class="subtitle">Panduan lengkap kata kunci dan instruksi suara untuk berinteraksi dengan Nova Robot Assistant</div>
+
+    <div class="hybrid-box">
+        <div class="mode-card">
+            <h3>1. Tanpa AI (Offline)</h3>
+            <p>Diproses langsung di lokal Raspberry Pi Anda menggunakan pencocokan pola cepat. Berjalan instan tanpa internet dan menghemat kuota API 100%.</p>
+        </div>
+        <div class="mode-card">
+            <h3>2. Menggunakan AI (Online)</h3>
+            <p>Menggunakan Gemini AI untuk pemahaman bahasa alami yang fleksibel. Bisa menjawab pertanyaan umum, melakukan Google Search, dan memahami instruksi bebas.</p>
+        </div>
+    </div>
+
+    <!-- SEKSI 1: OFFLINE -->
+    <div class="section-title">1. Daftar Perintah Tanpa AI (Offline)</div>
+    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 25px;">
+        Katakan kata kunci di bawah ini dengan tepat agar Nova mengeksekusi secara instan:
+    </p>
+
+    <div class="group-title">🖥️ Navigasi Halaman Terpisah (Open / Close Page)</div>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 35%;">Perintah</th>
+                <th style="width: 35%;">Fungsi</th>
+                <th style="width: 30%;">Contoh Ucapan</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>buka catatan</code> / <code>masuk catatan</code></td>
+                <td>Membuka overlay Catatan & langsung masuk mode rekam</td>
+                <td><span class="example-val">"buka catatan"</span></td>
+            </tr>
+            <tr>
+                <td><code>buka tugas</code> / <code>masuk tugas</code></td>
+                <td>Membuka overlay halaman daftar tugas siswa</td>
+                <td><span class="example-val">"buka tugas"</span></td>
+            </tr>
+            <tr>
+                <td><code>buka alarm</code> / <code>masuk alarm</code></td>
+                <td>Membuka overlay halaman daftar alarm aktif</td>
+                <td><span class="example-val">"buka alarm"</span></td>
+            </tr>
+            <tr>
+                <td><code>buka fokus</code> / <code>masuk fokus</code></td>
+                <td>Membuka overlay halaman Fokus Pomodoro</td>
+                <td><span class="example-val">"masuk fokus"</span></td>
+            </tr>
+            <tr>
+                <td><code>buka musik</code> / <code>masuk musik</code></td>
+                <td>Membuka overlay halaman Pemutar Musik</td>
+                <td><span class="example-val">"buka musik"</span></td>
+            </tr>
+            <tr>
+                <td><code>tutup</code> / <code>keluar</code> / <code>kembali</code></td>
+                <td>Menutup halaman overlay aktif ke layar utama</td>
+                <td><span class="example-val">"keluar"</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="group-title">📋 Pengelolaan Catatan (Notes)</div>
+    <div class="note-badge">
+        <strong>Catatan Sistem:</strong> Saat Anda berada di halaman Catatan, Nova secara otomatis menonaktifkan AI dan mengalihkan fokus microphone untuk mendikte draf catatan secara lokal.
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 35%;">Perintah</th>
+                <th style="width: 35%;">Fungsi</th>
+                <th style="width: 30%;">Contoh Ucapan</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>catat</code> / <code>tambah catatan</code></td>
+                <td>Memulai sesi pendiktean catatan baru secara luring</td>
+                <td><span class="example-val">"catat"</span></td>
+            </tr>
+            <tr>
+                <td><code>catat [isi]</code> / <code>tambah catatan [isi]</code></td>
+                <td>Menyimpan catatan teks secara langsung</td>
+                <td><span class="example-val">"catat belajar fisika nanti malam"</span></td>
+            </tr>
+            <tr>
+                <td><code>selesai catatan</code> / <code>simpan catatan</code></td>
+                <td>Menyimpan draf luring yang sedang direkam dan keluar</td>
+                <td><span class="example-val">"selesai catatan"</span></td>
+            </tr>
+            <tr>
+                <td><code>hapus catatan [nomor ID]</code></td>
+                <td>Menghapus catatan berdasarkan nomor baris</td>
+                <td><span class="example-val">"hapus catatan 5"</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="group-title">📋 Pengelolaan Tugas (Tasks)</div>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 35%;">Perintah</th>
+                <th style="width: 35%;">Fungsi</th>
+                <th style="width: 30%;">Contoh Ucapan</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>tugas [judul]</code></td>
+                <td>Menambahkan tugas baru ke daftar</td>
+                <td><span class="example-val">"tugas laporan praktikum"</span></td>
+            </tr>
+            <tr>
+                <td><code>tugas [judul] tenggat [waktu]</code></td>
+                <td>Menambahkan tugas beserta batas waktu</td>
+                <td><span class="example-val">"tugas matematika tenggat besok"</span></td>
+            </tr>
+            <tr>
+                <td><code>tugas [judul] pukul [waktu]</code></td>
+                <td>Menambahkan tugas dengan jam tenggat spesifik</td>
+                <td><span class="example-val">"tugas kimia pukul 15:30"</span></td>
+            </tr>
+            <tr>
+                <td><code>selesai tugas [nomor ID]</code></td>
+                <td>Menandai tugas yang selesai</td>
+                <td><span class="example-val">"selesai tugas 2"</span></td>
+            </tr>
+            <tr>
+                <td><code>hapus tugas [nomor ID]</code></td>
+                <td>Menghapus tugas dari database</td>
+                <td><span class="example-val">"hapus tugas 3"</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="group-title">⏰ Pengelolaan Alarm</div>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 35%;">Perintah</th>
+                <th style="width: 35%;">Fungsi</th>
+                <th style="width: 30%;">Contoh Ucapan</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>pasang alarm [HH:MM] label [label]</code></td>
+                <td>Memasang alarm baru dengan nama label</td>
+                <td><span class="example-val">"pasang alarm 06:00 bangun pagi"</span></td>
+            </tr>
+            <tr>
+                <td><code>alarm jam [HH:MM]</code> / <code>alarm [HH:MM]</code></td>
+                <td>Memasang alarm tanpa nama label</td>
+                <td><span class="example-val">"alarm jam 07:15"</span></td>
+            </tr>
+            <tr>
+                <td><code>aktifkan alarm [nomor ID]</code></td>
+                <td>Menghidupkan alarm yang nonaktif</td>
+                <td><span class="example-val">"aktifkan alarm 1"</span></td>
+            </tr>
+            <tr>
+                <td><code>matikan alarm [nomor ID]</code></td>
+                <td>Menonaktifkan alarm sementara</td>
+                <td><span class="example-val">"matikan alarm 2"</span></td>
+            </tr>
+            <tr>
+                <td><code>hapus alarm [nomor ID]</code></td>
+                <td>Menghapus alarm sepenuhnya</td>
+                <td><span class="example-val">"hapus alarm 1"</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="group-title">🎵 Pemutar Musik Lokal</div>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 35%;">Perintah</th>
+                <th style="width: 35%;">Fungsi</th>
+                <th style="width: 30%;">Contoh Ucapan</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>daftar lagu</code> / <code>daftar musik</code></td>
+                <td>Melihat daftar file musik di folder local</td>
+                <td><span class="example-val">"daftar lagu"</span></td>
+            </tr>
+            <tr>
+                <td><code>putar musik</code> / <code>mainkan lagu</code></td>
+                <td>Memulai pemutaran lagu secara acak/awal</td>
+                <td><span class="example-val">"putar musik"</span></td>
+            </tr>
+            <tr>
+                <td><code>putar lagu [Nama/Nomor]</code></td>
+                <td>Memutar file lagu pilihan tertentu</td>
+                <td><span class="example-val">"putar lagu 2"</span></td>
+            </tr>
+            <tr>
+                <td><code>lagu selanjutnya</code> / <code>next</code></td>
+                <td>Berpindah ke lagu berikutnya</td>
+                <td><span class="example-val">"lagu selanjutnya"</span></td>
+            </tr>
+            <tr>
+                <td><code>lagu sebelumnya</code> / <code>prev</code></td>
+                <td>Berpindah ke lagu sebelumnya</td>
+                <td><span class="example-val">"lagu sebelumnya"</span></td>
+            </tr>
+            <tr>
+                <td><code>jeda</code> / <code>pause</code></td>
+                <td>Menghentikan sementara lagu yang berbunyi</td>
+                <td><span class="example-val">"jeda musik"</span></td>
+            </tr>
+            <tr>
+                <td><code>lanjut</code> / <code>resume</code></td>
+                <td>Melanjutkan kembali lagu yang dijeda</td>
+                <td><span class="example-val">"lanjut musik"</span></td>
+            </tr>
+            <tr>
+                <td><code>stop</code> / <code>stop musik</code></td>
+                <td>Menghentikan total lagu yang sedang diputar</td>
+                <td><span class="example-val">"stop musik"</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="group-title">🔊 Pengatur Volume Sistem</div>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 35%;">Perintah</th>
+                <th style="width: 35%;">Fungsi</th>
+                <th style="width: 30%;">Contoh Ucapan</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>tambah volume</code> / <code>kerasin volume</code></td>
+                <td>Meningkatkan kekerasan suara (+15%)</td>
+                <td><span class="example-val">"kerasin volume"</span></td>
+            </tr>
+            <tr>
+                <td><code>kecilin volume</code> / <code>kurangi volume</code></td>
+                <td>Mengurangi kekerasan suara (-15%)</td>
+                <td><span class="example-val">"kurangi volume"</span></td>
+            </tr>
+            <tr>
+                <td><code>set volume [nilai]</code> / <code>volume [nilai]</code></td>
+                <td>Mengatur level volume spesifik (0-100)</td>
+                <td><span class="example-val">"volume 80"</span></td>
+            </tr>
+            <tr>
+                <td><code>mute</code> / <code>matikan suara</code></td>
+                <td>Membisukan suara perangkat</td>
+                <td><span class="example-val">"mute volume"</span></td>
+            </tr>
+            <tr>
+                <td><code>unmute</code> / <code>suarakan</code></td>
+                <td>Mengembalikan suara perangkat ke level 50</td>
+                <td><span class="example-val">"unmute"</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="group-title">⏱️ Fokus Pomodoro & Timer</div>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 35%;">Perintah</th>
+                <th style="width: 35%;">Fungsi</th>
+                <th style="width: 30%;">Contoh Ucapan</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>mulai pomodoro</code> / <code>fokus pomodoro</code></td>
+                <td>Memulai penghitung waktu belajar (25 menit)</td>
+                <td><span class="example-val">"mulai pomodoro"</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="group-title">🧮 Kalkulator Aritmatika Offline</div>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 35%;">Perintah</th>
+                <th style="width: 35%;">Fungsi</th>
+                <th style="width: 30%;">Contoh Ucapan</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>hitung [angka] [operasi] [angka]</code></td>
+                <td>Menghitung operasi matematika dasar secara lokal</td>
+                <td><span class="example-val">"hitung 15 kali 12"</span> / <span class="example-val">"hitung seratus bagi lima"</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="group-title">💻 Status Performa Perangkat</div>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 35%;">Perintah</th>
+                <th style="width: 35%;">Fungsi</th>
+                <th style="width: 30%;">Contoh Ucapan</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>status sistem</code> / <code>cek performa</code></td>
+                <td>Memeriksa utilisasi CPU, RAM, dan Baterai</td>
+                <td><span class="example-val">"status sistem"</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- SEKSI 2: ONLINE -->
+    <div class="section-title">2. Daftar Perintah Menggunakan AI (Online)</div>
+    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px;">
+        Katakan perintah dalam kalimat bebas, Gemini AI akan menafsirkan ucapan Anda secara dinamis:
+    </p>
+    <ul>
+        <li><strong>Google Search Grounding:</strong> Bertanya cuaca, berita terbaru, atau fakta umum. Nova akan mencari di Google dan melampirkan sumber link di layar.<br>
+            <em>Contoh: <span class="example-val">"Bagaimana perkiraan cuaca di Surabaya hari ini?"</span></em>
+        </li>
+        <li><strong>Navigasi Halaman & Fitur:</strong> Meminta AI membuka aplikasi atau mengubah sistem.<br>
+            <em>Contoh: <span class="example-val">"Tolong buka halaman catatan saya"</span> atau <span class="example-val">"Nova, tolong kecilkan volume jadi tiga puluh persen."</span></em>
+        </li>
+        <li><strong>Bantuan Belajar:</strong> Meminta penjelasan materi, rumus, atau pemrograman.<br>
+            <em>Contoh: <span class="example-val">"Jelaskan cara kerja hukum Newton"</span> atau <span class="example-val">"Bagaimana cara menulis perulangan di Python?"</span></em>
+        </li>
+        <li><strong>Obrolan Bebas:</strong> Menyapa atau berdialog santai.<br>
+            <em>Contoh: <span class="example-val">"Halo Nova, selamat pagi."</span></em>
+        </li>
+    </ul>
+
+    <!-- SEKSI 3: UI -->
+    <div class="section-title">3. Fitur Antarmuka (UI) Dan Tema Tampilan</div>
+    <ul>
+        <li><strong>Floating App Dock:</strong> Menu navigasi vertikal melayang di sisi kiri layar untuk membuka panel Catatan, Tugas, Alarm, Fokus Pomodoro, atau Musik dengan sekali klik.</li>
+        <li><strong>Close Button [X]:</strong> Tombol keluar di kanan atas panel untuk menyembunyikan aplikasi dan kembali ke wajah utama robot.</li>
+        <li><strong>Pilihan Tema:</strong> Klik tombol ikon palet warna di pojok kiri atas untuk memilih salah satu dari 5 tema:
+            <ol style="margin-top: 8px;">
+                <li>Cyberpunk (Gelap neon cyan-purple)</li>
+                <li>Arduino Tech (Gelap bernuansa hijau teal mikrokontroler)</li>
+                <li>Neo-Brutalisme (Terang dengan kontras tinggi dan bayangan hitam tebal)</li>
+                <li>Feminin Pink (Burgundy gelap dengan aksen merah muda Sakura)</li>
+                <li>Maskulin Biru (Navy gelap dengan aksen biru muda yang kokoh)</li>
+            </ol>
+        </li>
+        <li><strong>Status Dashboard:</strong> Metrik CPU, RAM, dan Baterai akan terupdate di footer kanan bawah setiap 10 detik.</li>
+    </ul>
+</div>
+
+</body>
+</html>
